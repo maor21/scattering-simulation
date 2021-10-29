@@ -16,7 +16,7 @@ class Medium:
     def __init__(self, length = 700, width = 1000):
         self.length = length
         self.width  = width
-        self.scat   = {}
+        # self.scat   = {}
 
 
     def set_location(self, phase_choice, N):
@@ -48,7 +48,7 @@ class Medium:
         z   = lambda a: random.random() * random.randrange(a - d, a + d)         # creates pair of random values within an accepted area
         loc = []
         for i in range(N):
-            loc.append = [z(x), z(y)]                                            # the location [x,y] of a given scatterer
+            loc.append([z(x), z(y)])                                               # the location [x,y] of a given scatterer
         return loc
 
     def set_simple_cubic_location(self, N):
@@ -76,9 +76,9 @@ class Medium:
         This method shift every second column of scatterers which was created by
         set_simple_cubic_location(), by d/4 upwards
         """
-        d   = self.l / 10 
+        d   = self.length / 10 
         n   = 4
-        loc = Medium.set_simple_cubic_location(N)
+        loc = Medium.set_simple_cubic_location(self, N=N)
         l   = []
         k   = list(range(1, N, 2 * n))
         for i in list(range(len(k))):
@@ -93,6 +93,7 @@ class Medium:
         h_medium = {}
         h_fig = plt.figure()
         h_ax  = plt.axes()
-        # line  = plt.scatter([0,1,2,3,4,5,6,7,8,9], [0,1,4,9,16,25,36,49,64,81])
         plt.show()
         return 
+
+        # add all parameters for the figure and axes here.

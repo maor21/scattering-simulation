@@ -19,11 +19,16 @@
 #         return ???
 
 
+# import wave
+
+
 class Scatterer:
     def __init__(self):
         self.delta_r  = 1           # the distance from its location to the measurment
         self.location = []          # a set of two values (x,y) for its location
         self.state    = 0           # the state of scatterer refers to whether its emiting radiation or not. i.e., if it was hit by an incident wave.
+        self.field    = [0]         # the scattered field emitted by each object. the initial value is 0. in each time step, an updated value will be appended.
+        self.n        = 0           # the number of wavefronts. updated each itteration.
 
 
     def measure_field(self, location, time, wave):
@@ -41,14 +46,14 @@ class Scatterer:
         return field
 
     
-    def update_secondary(self, wave):
-        """this function updates the number of wavefronts so by the end of the simulation we can draw them all.
-        """
+    # def update_secondary(self, wave):
+    #     """this function updates the number of wavefronts so by the end of the simulation we can draw them all.
+    #     """
 
-        n = round(self.delta_r / wave.wavelength)       # number of wavefronts
-        # here I need to plot a new circle using scatter(). the size of the scatter() is given by the parameter 's' as an argument: s=size.
-        # size is equal to the area of the circle. same in matlab.
-        return n                                        # maybe we can plot only once at the end, so we would like to know how many wavefront are.
+    #     n = round(self.delta_r / wave.wavelength)       # number of wavefronts
+    #     # here I need to plot a new circle using scatter(). the size of the scatter() is given by the parameter 's' as an argument: s=size.
+    #     # size is equal to the area of the circle. same in matlab.
+    #     return n                                        # maybe we can plot only once at the end, so we would like to know how many wavefront are.
     
     def emitting(self, medium, wave):
         """this function checks if the wave hit the scatterer. If so, the scatterer
@@ -58,3 +63,17 @@ class Scatterer:
         wave_hit = medium.check_hit(self, wave)
         if wave_hit == 1:
             self.update_secondary(self, wave)
+
+    def update_n(self, time):
+        # needs to be filled here
+        return self.n
+
+    def update_field(self, wave, time):
+        # needs to be filled here
+        self.field.append(self.measure_field(location=[0,10], time=time, wave=wave))
+        return self.field
+
+    def update_state(self, m):
+        # needs to be filled here
+        return self.state
+
